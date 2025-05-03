@@ -17,11 +17,6 @@ const ENDPOINTS = {
   // Push notifications (web push) (Story notif, Subscribe, Unsubscribe)
   SUBSCRIBE: `${BASE_URL}/notifications/subscribe`,
   UNSUBSCRIBE: `${BASE_URL}/notifications/subscribe`,
-  SEND_REPORT_TO_ME: (reportId) => `${BASE_URL}/reports/${reportId}/notify-me`,
-  SEND_REPORT_TO_USER: (reportId) => `${BASE_URL}/reports/${reportId}/notify`,
-  SEND_REPORT_TO_ALL_USER: (reportId) => `${BASE_URL}/reports/${reportId}/notify-all`,
-  SEND_COMMENT_TO_REPORT_OWNER: (reportId, commentId) =>
-    `${BASE_URL}/reports/${reportId}/comments/${commentId}/notify`,
 };
 
 export async function getRegistered({ name, email, password }) {
