@@ -5,18 +5,16 @@ const ENDPOINTS = {
   // Auth
   REGISTER: `${BASE_URL}/register`,
   LOGIN: `${BASE_URL}/login`,
-  MY_USER_INFO: `${BASE_URL}/users/me`,
 
-  // Report
-  REPORT_LIST: `${BASE_URL}/reports`,
-  REPORT_DETAIL: (id) => `${BASE_URL}/reports/${id}`,
-  STORE_NEW_REPORT: `${BASE_URL}/reports`,
+  // Add new stories
 
-  // Report Comment
-  REPORT_COMMENTS_LIST: (reportId) => `${BASE_URL}/reports/${reportId}/comments`,
-  STORE_NEW_REPORT_COMMENT: (reportId) => `${BASE_URL}/reports/${reportId}/comments`,
+  // Add new stories (guest)
 
-  // Report Comment
+  // Get all stories
+
+  // Detail story
+
+  // Push notifications (web push) (Story notif, Subscribe, Unsubscribe)
   SUBSCRIBE: `${BASE_URL}/notifications/subscribe`,
   UNSUBSCRIBE: `${BASE_URL}/notifications/subscribe`,
   SEND_REPORT_TO_ME: (reportId) => `${BASE_URL}/reports/${reportId}/notify-me`,
