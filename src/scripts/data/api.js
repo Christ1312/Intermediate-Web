@@ -56,20 +56,6 @@ export async function getLogin({ email, password }) {
   };
 }
 
-export async function getMyUserInfo() {
-  const accessToken = getAccessToken();
-
-  const fetchResponse = await fetch(ENDPOINTS.MY_USER_INFO, {
-    headers: { Authorization: `Bearer ${accessToken}` },
-  });
-  const json = await fetchResponse.json();
-
-  return {
-    ...json,
-    ok: fetchResponse.ok,
-  };
-}
-
 export async function getAllReports() {
   const accessToken = getAccessToken();
 
@@ -122,40 +108,6 @@ export async function storeNewReport({
     method: 'POST',
     headers: { Authorization: `Bearer ${accessToken}` },
     body: formData,
-  });
-  const json = await fetchResponse.json();
-
-  return {
-    ...json,
-    ok: fetchResponse.ok,
-  };
-}
-
-export async function getAllCommentsByReportId(reportId) {
-  const accessToken = getAccessToken();
-
-  const fetchResponse = await fetch(ENDPOINTS.REPORT_COMMENTS_LIST(reportId), {
-    headers: { Authorization: `Bearer ${accessToken}` },
-  });
-  const json = await fetchResponse.json();
-
-  return {
-    ...json,
-    ok: fetchResponse.ok,
-  };
-}
-
-export async function storeNewCommentByReportId(reportId, { body }) {
-  const accessToken = getAccessToken();
-  const data = JSON.stringify({ body });
-
-  const fetchResponse = await fetch(ENDPOINTS.STORE_NEW_REPORT_COMMENT(reportId), {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${accessToken}`,
-    },
-    body: data,
   });
   const json = await fetchResponse.json();
 
