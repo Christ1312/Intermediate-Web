@@ -19,6 +19,7 @@ const ENDPOINTS = {
             .then((responseJson) => {
                 const { data } = responseJson;
                 return data;
+              console.log(response);
             })
     }
 
