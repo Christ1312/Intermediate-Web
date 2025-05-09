@@ -1,12 +1,7 @@
 import { getAccessToken } from '../utils/auth';
 import { BASE_URL } from '../config';
 
-const ENDPOINTS = {
-  // Auth
-  REGISTER: `${BASE_URL}/register`,
-  LOGIN: `${BASE_URL}/login`,
-
-  // Add new stories
+// Add new stories
   static async getNotes() {
         return fetch(`${BASE_URL}/stories`)
             .then((response) => {
@@ -22,6 +17,13 @@ const ENDPOINTS = {
               console.log(response);
             })
     }
+
+const ENDPOINTS = {
+  // Auth
+  REGISTER: `${BASE_URL}/register`,
+  LOGIN: `${BASE_URL}/login`,
+
+  
 
   // Add new stories (guest)
 
