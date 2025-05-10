@@ -2,7 +2,7 @@ import { getAccessToken } from '../utils/auth';
 import { BASE_URL } from '../config';
 
 // Add new stories
-  static async getNotes() {
+  async function getNotes() {
         return fetch(`${BASE_URL}/stories`)
             .then((response) => {
                 if (response.status >= 200 && response.status < 300) {
