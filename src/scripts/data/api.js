@@ -12,8 +12,8 @@ import { BASE_URL } from '../config';
                 }
             })
             .then((responseJson) => {
-                const { data } = responseJson;
-                return data;
+                const { listStory } = responseJson;
+                return listStory;
               console.log(response);
             })
     }
