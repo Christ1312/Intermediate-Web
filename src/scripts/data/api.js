@@ -2,22 +2,23 @@ import { getAccessToken } from '../utils/auth';
 import { BASE_URL } from '../config';
 
 // Add new stories
-  export async function getNotes() {
-        return fetch(`${BASE_URL}/stories`)
-            .then((response) => {
-                if (response.status >= 200 && response.status < 300) {
-                    return response.json();
-                } else {
-                    return Promise.reject(new Error('Something went wrong'))
-                }
-            })
-            .then((responseJson) => {
-                const { listStory } = responseJson;
-                return listStory;
-              console.log(response);
-            })
-    }
-
+  export async function getStory() {
+  return fetch(`${BASE_URL}/stories`,
+    {
+      headers: { Authorization: 'Bearer ' + getAccessToken() }
+    })
+    .then((response) => {
+      if (response.status >= 200 && response.status < 300) {
+        return response.json();
+      } else {
+        return Promise.reject(new Error('Something went wrong'))
+      }
+    })
+    .then((responseJson) => {
+      const { listStory } = responseJson;
+      return listStory;
+    })
+}
 const ENDPOINTS = {
   // Auth
   REGISTER: `${BASE_URL}/register`,
