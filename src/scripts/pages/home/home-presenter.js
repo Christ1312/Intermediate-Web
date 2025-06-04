@@ -23,7 +23,7 @@ export default class HomePresenter {
     try {
       await this.showReportsListMap();
 
-      const response = await this.#model.getAllReports();
+      const response = await this.#model.getStory();
 
       if (!response.ok) {
         console.error('initialGalleryAndMap: response:', response);
