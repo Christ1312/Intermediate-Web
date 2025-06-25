@@ -31,7 +31,7 @@ export default class HomePresenter {
         return;
       }
 
-      this.#view.populateReportsList(response.message, response.data);
+      this.#view.populateStoriesList(response.message, response.listStory);
     } catch (error) {
       console.error('initialGalleryAndMap: error:', error);
       this.#view.populateReportsListError(error.message);

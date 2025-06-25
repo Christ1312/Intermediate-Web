@@ -80,40 +80,38 @@ export function generateCommentsListErrorTemplate(message) {
   `;
 }
 
-export function generateReportItemTemplate({
+export function generateStoryItemTemplate({
   id,
-  title,
+  name,
   description,
-  evidenceImages,
-  reporterName,
+  photoUrl,
   createdAt,
-  location,
+  placeName,
 }) {
   return `
-    <div tabindex="0" class="report-item" data-reportid="${id}">
-      <img class="report-item__image" src="${evidenceImages[0]}" alt="${title}">
-      <div class="report-item__body">
-        <div class="report-item__main">
-          <h2 id="report-title" class="report-item__title">${title}</h2>
-          <div class="report-item__more-info">
-            <div class="report-item__createdat">
-              <i class="fas fa-calendar-alt"></i> ${showFormattedDate(createdAt, 'id-ID')}
-            </div>
-            <div class="report-item__location">
-              <i class="fas fa-map"></i> ${Object.values(location)}
-            </div>
+    <div tabindex="0" class="story-item" data-storyid="${id}">
+      <img class="story-item__image" src="${photoUrl}" alt="${name}">
+      <div class="story-item__body">
+        <div class="story-item__main">
+          <div class="story-item__createdat">
+            <i data-feather="calendar"></i> 
+            <p>${showFormattedDate(createdAt, 'id-ID')}</p>
+          </div>
+          <div class="story-item__location">
+            <i data-feather="map-pin"></i> 
+            <p>${placeName}</p>
           </div>
         </div>
-        <div id="report-description" class="report-item__description">
-          ${description}
+        <div id="story-description" class="story-item__description">
+          <i data-feather="message-circle"></i> 
+          <p>${description}</p>
         </div>
-        <div class="report-item__more-info">
-          <div class="report-item__author">
-            Dilaporkan oleh: ${reporterName}
-          </div>
+        <div class="story-item__author">
+          <i data-feather="edit"></i>
+          <p>${name}</p>
         </div>
-        <a class="btn report-item__read-more" href="#/reports/${id}">
-          Selengkapnya <i class="fas fa-arrow-right"></i>
+        <a class="btn story-item__read-more" href="#/stories/${id}">
+          Selengkapnya <i data-feather="arrow-right"></i>
         </a>
       </div>
     </div>

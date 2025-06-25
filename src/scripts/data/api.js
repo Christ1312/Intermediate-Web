@@ -3,21 +3,17 @@ import { BASE_URL } from '../config';
 
 // Add new stories
   export async function getStory() {
-  return fetch(`${BASE_URL}/stories`,
-    {
-      headers: { Authorization: 'Bearer ' + getAccessToken() }
-    })
-    .then((response) => {
-      if (response.status >= 200 && response.status < 300) {
-        return response.json();
-      } else {
-        return Promise.reject(new Error('Something went wrong'))
-      }
-    })
-    .then((responseJson) => {
-      const { listStory } = responseJson;
-      return listStory;
-    })
+  const response = await fetch(`${BASE_URL}/stories`, {
+    headers: {
+      Authorization: 'Bearer ' + getAccessToken()
+    }
+  });
+  const responseJSON = await response.json();
+  
+  return {
+    ...responseJSON,
+    ok: response.ok,
+  };
 }
 const ENDPOINTS = {
   // Auth

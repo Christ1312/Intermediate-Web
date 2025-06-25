@@ -1,8 +1,8 @@
 import {
   generateLoaderAbsoluteTemplate,
-  generateReportItemTemplate,
-  generateReportsListEmptyTemplate,
-  generateReportsListErrorTemplate,
+  generateStoryItemTemplate,
+  generateStoriesListEmptyTemplate,
+  generateStoriesListErrorTemplate,
 } from '../../templates';
 import HomePresenter from './home-presenter';
 import * as CityCareAPI from '../../data/api';
@@ -13,8 +13,8 @@ export default class HomePage {
   async render() {
     return `
       <section>
-        <div class="reports-list__map__container">
-          <div id="map" class="reports-list__map"></div>
+        <div class="Stories-list__map__container">
+          <div id="map" class="Stories-list__map"></div>
           <div id="map-loading-container"></div>
         </div>
       </section>
@@ -22,9 +22,9 @@ export default class HomePage {
       <section class="container">
         <h1 class="section-title">Daftar Laporan Kerusakan</h1>
 
-        <div class="reports-list__container">
-          <div id="reports-list"></div>
-          <div id="reports-list-loading-container"></div>
+        <div class="Stories-list__container">
+          <div id="Stories-list"></div>
+          <div id="Stories-list-loading-container"></div>
         </div>
       </section>
     `;
@@ -39,32 +39,29 @@ export default class HomePage {
     await this.#presenter.initialGalleryAndMap();
   }
 
-  populateReportsList(message, reports) {
-    if (reports.length <= 0) {
-      this.populateReportsListEmpty();
+  populateStoriesList(message, stories) {
+    if (stories.length <= 0) {
+      this.populateStoriesListEmpty();
       return;
     }
-
-    const html = reports.reduce((accumulator, report) => {
+    const html = stories.reduce((accumulator, story) => {
       return accumulator.concat(
-        generateReportItemTemplate({
-          ...report,
-          reporterName: report.reporter.name,
+        generateStoryItemTemplate({
+          ...story,
         }),
       );
     }, '');
-
-    document.getElementById('reports-list').innerHTML = `
-      <div class="reports-list">${html}</div>
+    document.getElementById('Stories-list').innerHTML = `
+      <div class="Stories-list">${html}</div>
     `;
   }
 
-  populateReportsListEmpty() {
-    document.getElementById('reports-list').innerHTML = generateReportsListEmptyTemplate();
+  populateStoriesListEmpty() {
+    document.getElementById('Stories-list').innerHTML = generateStoriesListEmptyTemplate();
   }
 
-  populateReportsListError(message) {
-    document.getElementById('reports-list').innerHTML = generateReportsListErrorTemplate(message);
+  populateStoriesListError(message) {
+    document.getElementById('Stories-list').innerHTML = generateStoriesListErrorTemplate(message);
   }
 
   async initialMap() {
@@ -80,11 +77,11 @@ export default class HomePage {
   }
 
   showLoading() {
-    document.getElementById('reports-list-loading-container').innerHTML =
+    document.getElementById('Stories-list-loading-container').innerHTML =
       generateLoaderAbsoluteTemplate();
   }
 
   hideLoading() {
-    document.getElementById('reports-list-loading-container').innerHTML = '';
+    document.getElementById('Stories-list-loading-container').innerHTML = '';
   }
 }
