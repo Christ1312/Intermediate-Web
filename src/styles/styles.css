@@ -439,7 +439,7 @@ header {
   background-color: darkgray;
 }
 
-.reports-list {
+.storiess-list {
   display: grid;
   grid-template-columns: repeat(1, minmax(300px, 1fr));
   gap: 20px 15px;
@@ -450,14 +450,14 @@ header {
   text-align: center;
 }
 
-.report-item {
+.story-item {
   border-radius: 12px;
   border: 1px solid #d4d4d4;
   background-color: #ffffff;
   overflow: hidden;
 }
 
-.report-item__image {
+.story-item__image {
   display: block;
   width: 100%;
   height: 250px;

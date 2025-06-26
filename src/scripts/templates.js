@@ -35,7 +35,7 @@ export function generateAuthenticatedNavigationListTemplate() {
   `;
 }
 
-export function generateReportsListEmptyTemplate() {
+export function generateStoriesListEmptyTemplate() {
   return `
     <div id="reports-list-empty" class="reports-list__empty">
       <h2>Tidak ada laporan yang tersedia</h2>
@@ -44,7 +44,7 @@ export function generateReportsListEmptyTemplate() {
   `;
 }
 
-export function generateReportsListErrorTemplate(message) {
+export function generateStoriesListErrorTemplate(message) {
   return `
     <div id="reports-list-error" class="reports-list__error">
       <h2>Terjadi kesalahan pengambilan daftar laporan</h2>
