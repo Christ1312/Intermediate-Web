@@ -1,8 +1,8 @@
 import { getAccessToken } from '../utils/auth';
 import { BASE_URL } from '../config';
 
-// Add new stories
-  export async function getStory() {
+// Get all stories
+export async function getStory() {
   const response = await fetch(`${BASE_URL}/stories`, {
     headers: {
       Authorization: 'Bearer ' + getAccessToken()
@@ -22,9 +22,31 @@ const ENDPOINTS = {
 
   
 
-  // Add new stories (guest)
+  // Add new stories 
+  const addStory = (request, h) => {
+    const { description, photo } = request.payload;
+ 
+  const newStory = {
+   description,
+   photo,
+  };
+ 
+  books.push(newStory);
+ 
+  const isSuccess = books.filter((Book) => Book.id === id).length > 0;
+ 
+  if (isSuccess) {
+    const response = h.response({
+      "error": false,
+      "message": "success"
+    });
+    response.code(201);
+    return response;
+  }
+}
 
-  // Get all stories
+
+  // Add new stories (guest)
 
   // Detail story
 
