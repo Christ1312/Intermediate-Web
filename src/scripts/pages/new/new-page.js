@@ -2,6 +2,8 @@ import NewPresenter from './new-presenter';
 import { convertBase64ToBlob } from '../../utils';
 import * as CityCareAPI from '../../data/api';
 import { generateLoaderAbsoluteTemplate } from '../../templates';
+import Camera from '../../utils/camera';
+
 
 export default class NewPage {
   #presenter;
@@ -133,14 +135,16 @@ export default class NewPage {
       .getElementById('open-documentations-camera-button')
       .addEventListener('click', async (event) => {
         cameraContainer.classList.toggle('open');
-
         this.#isCameraOpen = cameraContainer.classList.contains('open');
+ 
         if (this.#isCameraOpen) {
           event.currentTarget.textContent = 'Tutup Kamera';
-
+          this.#setupCamera();
+          this.#camera.launch();
+ 
           return;
         }
-
+ 
         event.currentTarget.textContent = 'Buka Kamera';
       });
   }
@@ -150,7 +154,13 @@ export default class NewPage {
   }
 
   #setupCamera() {
-    // TODO: camera initialization
+    if (this.#camera) {
+      return;
+    }
+    this.#camera = new Camera({
+      video: document.getElementById('camera-video'),
+      cameraSelect: document.getElementById('camera-select'),
+    });
   }
 
   async #addTakenPicture(image) {
