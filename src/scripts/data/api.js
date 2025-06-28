@@ -15,40 +15,36 @@ export async function getStory() {
     ok: response.ok,
   };
 }
-const ENDPOINTS = {
-  // Auth
-  REGISTER: `${BASE_URL}/register`,
-  LOGIN: `${BASE_URL}/login`,
 
-  
-
-  // Add new stories 
-  const addStory = (request, h) => {
-    const { description, photo } = request.payload;
- 
-  const newStory = {
-   description,
-   photo,
+// Add new stories 
+export async function insertStory({ description, photo, lat, lon }) {
+  const accessToken = getAccessToken();
+  const formData = new FormData();
+  formData.set('description', description);
+  formData.append('photo', photo);
+  formData.set('lat', lat);
+  formData.set('lon', lon);
+  const fetchResponse = await fetch(ENDPOINTS.ADD_STORIES, {
+    method: 'POST',
+    headers: { Authorization: `Bearer ${accessToken}` },
+    body: formData,
+  });
+  const json = await fetchResponse.json();
+  return {
+    ...json,
+    ok: fetchResponse.ok,
   };
- 
-  books.push(newStory);
- 
-  const isSuccess = books.filter((Book) => Book.id === id).length > 0;
- 
-  if (isSuccess) {
-    const response = h.response({
-      "error": false,
-      "message": "success"
-    });
-    response.code(201);
-    return response;
-  }
 }
-
 
   // Add new stories (guest)
 
   // Detail story
+
+const ENDPOINTS = {
+  // Auth
+  REGISTER: `${BASE_URL}/register`,
+  LOGIN: `${BASE_URL}/login`,
+  ADD_STORIES: `{BASE_URL}/stories`,
 
   // Push notifications (web push) (Story notif, Subscribe, Unsubscribe)
   SUBSCRIBE: `${BASE_URL}/notifications/subscribe`,

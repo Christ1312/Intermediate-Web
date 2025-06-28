@@ -18,14 +18,12 @@ export default class NewPresenter {
     }
   }
 
-  async postNewReport({ title, damageLevel, description, evidenceImages, latitude, longitude }) {
+  async postNewReport({ description, photo, latitude, longitude }) {
     this.#view.showSubmitLoadingButton();
     try {
       const data = {
-        title: title,
-        damageLevel: damageLevel,
         description: description,
-        evidenceImages: evidenceImages,
+        photo: photo,
         latitude: latitude,
         longitude: longitude,
       };
@@ -37,7 +35,7 @@ export default class NewPresenter {
         return;
       }
 
-      this.#view.storeSuccessfully(response.message, response.data);
+      this.#view.storeSuccessfully(description, photo, latitude, longitude);
     } catch (error) {
       console.error('postNewReport: error:', error);
       this.#view.storeFailed(error.message);
