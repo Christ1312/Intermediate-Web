@@ -9,7 +9,7 @@ import {
   generateSaveReportButtonTemplate,
 } from '../../templates';
 import { createCarousel } from '../../utils';
-import ReportDetailPresenter from './report-detail-presenter';
+import StoryDetailPresenter from './story-detail-presenter';
 import { parseActivePathname } from '../../routes/url-parser';
 import * as CityCareAPI from '../../data/api';
 
@@ -49,7 +49,7 @@ export default class ReportDetailPage {
   }
 
   async afterRender() {
-    this.#presenter = new ReportDetailPresenter(parseActivePathname().id, {
+    this.#presenter = new StoryDetailPresenter(parseActivePathname().id, {
       view: this,
       apiModel: CityCareAPI,
     });

@@ -8,6 +8,7 @@ import Camera from '../../utils/camera';
 export default class NewPage {
   #presenter;
   #form;
+  #camera
   #isCameraOpen = false;
   #takenDocumentations = [];
 
@@ -42,7 +43,7 @@ export default class NewPage {
             <div class="form-control">
               <label for="documentations-input" class="new-form__documentations__title">Dokumentasi</label>
               <div id="documentations-more-info">Anda dapat menyertakan foto sebagai dokumentasi.</div>
-
+ 
               <div class="new-form__documentations__container">
                 <div class="new-form__documentations__buttons">
                   <button id="documentations-input-button" class="btn btn-outline" type="button">Ambil Gambar</button>
@@ -61,7 +62,17 @@ export default class NewPage {
                   </button>
                 </div>
                 <div id="camera-container" class="new-form__camera__container">
-                  <p>Fitur ambil gambar dengan kamera akan segera hadir!</p>
+                  <video id="camera-video" class="new-form__camera__video">
+                      Video stream not available.
+                  </video>
+                  <div class="new-form__camera__tools">
+                    <select id="camera-select"></select>
+                  </div>
+                  <canvas id="camera-canvas" class="new-form__camera__canvas"></canvas>
+ 
+                  <div class="new-form__camera__tools">
+                    <select id="camera-select"></select>
+                  </div>
                 </div>
                 <ul id="documentations-taken-list" class="new-form__documentations__outputs"></ul>
               </div>
