@@ -7,12 +7,12 @@ export default class HomePresenter {
     this.#model = model;
   }
 
-  async showReportsListMap() {
+  async showStorysListMap() {
     this.#view.showMapLoading();
     try {
       await this.#view.initialMap();
     } catch (error) {
-      console.error('showReportsListMap: error:', error);
+      console.error('showStorysListMap: error:', error);
     } finally {
       this.#view.hideMapLoading();
     }
@@ -21,20 +21,20 @@ export default class HomePresenter {
   async initialGalleryAndMap() {
     this.#view.showLoading();
     try {
-      await this.showReportsListMap();
+      await this.showStorysListMap();
 
       const response = await this.#model.getStory();
 
       if (!response.ok) {
         console.error('initialGalleryAndMap: response:', response);
-        this.#view.populateReportsListError(response.message);
+        this.#view.populateStorysListError(response.message);
         return;
       }
 
       this.#view.populateStoriesList(response.message, response.listStory);
     } catch (error) {
       console.error('initialGalleryAndMap: error:', error);
-      this.#view.populateReportsListError(error.message);
+      this.#view.populateStorysListError(error.message);
     } finally {
       this.#view.hideLoading();
     }

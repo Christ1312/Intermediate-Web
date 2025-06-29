@@ -18,7 +18,7 @@ export default class NewPresenter {
     }
   }
 
-  async postNewReport({ description, photo, latitude, longitude }) {
+  async postNewStory({ description, photo, latitude, longitude }) {
     this.#view.showSubmitLoadingButton();
     try {
       const data = {
@@ -27,17 +27,17 @@ export default class NewPresenter {
         latitude: latitude,
         longitude: longitude,
       };
-      const response = await this.#model.storeNewReport(data);
+      const response = await this.#model.storeNewStory(data);
 
       if (!response.ok) {
-        console.error('postNewReport: response:', response);
+        console.error('postNewStory: response:', response);
         this.#view.storeFailed(response.message);
         return;
       }
 
       this.#view.storeSuccessfully(description, photo, latitude, longitude);
     } catch (error) {
-      console.error('postNewReport: error:', error);
+      console.error('postNewStory: error:', error);
       this.#view.storeFailed(error.message);
     } finally {
       this.#view.hideSubmitLoadingButton();

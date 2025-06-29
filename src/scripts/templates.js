@@ -14,7 +14,7 @@ export function generateLoaderAbsoluteTemplate() {
 
 export function generateMainNavigationListTemplate() {
   return `
-    <li><a id="report-list-button" class="report-list-button" href="#/">Daftar Laporan</a></li>
+    <li><a id="story-list-button" class="story-list-button" href="#/">Daftar Laporan</a></li>
     <li><a id="bookmark-button" class="bookmark-button" href="#/bookmark">Laporan Tersimpan</a></li>
   `;
 }
@@ -30,14 +30,14 @@ export function generateUnauthenticatedNavigationListTemplate() {
 export function generateAuthenticatedNavigationListTemplate() {
   return `
     <li id="push-notification-tools" class="push-notification-tools"></li>
-    <li><a id="new-report-button" class="btn new-report-button" href="#/new">Buat Laporan <i class="fas fa-plus"></i></a></li>
+    <li><a id="new-story-button" class="btn new-story-button" href="#/new">Buat Laporan <i class="fas fa-plus"></i></a></li>
     <li><a id="logout-button" class="logout-button" href="#/logout"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
   `;
 }
 
 export function generateStoriesListEmptyTemplate() {
   return `
-    <div id="reports-list-empty" class="reports-list__empty">
+    <div id="storys-list-empty" class="storys-list__empty">
       <h2>Tidak ada laporan yang tersedia</h2>
       <p>Saat ini, tidak ada laporan kerusakan fasilitas umum yang dapat ditampilkan.</p>
     </div>
@@ -46,16 +46,16 @@ export function generateStoriesListEmptyTemplate() {
 
 export function generateStoriesListErrorTemplate(message) {
   return `
-    <div id="reports-list-error" class="reports-list__error">
+    <div id="storys-list-error" class="storys-list__error">
       <h2>Terjadi kesalahan pengambilan daftar laporan</h2>
       <p>${message ? message : 'Gunakan jaringan lain atau laporkan error ini.'}</p>
     </div>
   `;
 }
 
-export function generateReportDetailErrorTemplate(message) {
+export function generatestoryDetailErrorTemplate(message) {
   return `
-    <div id="reports-detail-error" class="reports-detail__error">
+    <div id="storys-detail-error" class="storys-detail__error">
       <h2>Terjadi kesalahan pengambilan detail laporan</h2>
       <p>${message ? message : 'Gunakan jaringan lain atau laporkan error ini.'}</p>
     </div>
@@ -152,7 +152,7 @@ export function generateDamageLevelBadge(damageLevel) {
   return '';
 }
 
-export function generateReportDetailImageTemplate(imageUrl = null, alt = '') {
+export function generatestoryDetailImageTemplate(imageUrl = null, alt = '') {
   if (!imageUrl) {
     return `
       <img class="story-detail__image" src="images/placeholder-image.jpg" alt="Placeholder Image">
@@ -164,7 +164,7 @@ export function generateReportDetailImageTemplate(imageUrl = null, alt = '') {
   `;
 }
 
-export function generateReportCommentItemTemplate({ photoUrlCommenter, nameCommenter, body }) {
+export function generatestoryCommentItemTemplate({ photoUrlCommenter, nameCommenter, body }) {
   return `
     <article tabindex="0" class="story-detail__comment-item">
       <img
@@ -182,21 +182,21 @@ export function generateReportCommentItemTemplate({ photoUrlCommenter, nameComme
   `;
 }
 
-export function generateReportDetailTemplate({
+export function generatestoryDetailTemplate({
   title,
   description,
   damageLevel,
   evidenceImages,
   latitudeLocation,
   longitudeLocation,
-  reporterName,
+  storyerName,
   createdAt,
 }) {
   const createdAtFormatted = showFormattedDate(createdAt, 'id-ID');
   const damageLevelBadge = generateDamageLevelBadge(damageLevel);
   const imagesHtml = evidenceImages.reduce(
     (accumulator, evidenceImage) =>
-      accumulator.concat(generateReportDetailImageTemplate(evidenceImage, title)),
+      accumulator.concat(generatestoryDetailImageTemplate(evidenceImage, title)),
     '',
   );
 
@@ -207,12 +207,13 @@ export function generateReportDetailTemplate({
       <div class="story-detail__more-info">
         <div class="story-detail__more-info__inline">
           <div id="createdat" class="story-detail__createdat" data-value="${createdAtFormatted}"><i class="fas fa-calendar-alt"></i></div>
+          <div id="location-place-name" class="story-detail__location__place-name" data-value="${location.placeName}"><i class="fas fa-map"></i></div>
         </div>
         <div class="story-detail__more-info__inline">
-          <div id="location-latitude" class="story-detail__location__latitude" data-value="${latitudeLocation}">Latitude:</div>
-          <div id="location-longitude" class="story-detail__location__longitude" data-value="${longitudeLocation}">Longitude:</div>
+          <div id="location-latitude" class="story-detail__location__latitude" data-value="${location.latitude}">Latitude:</div>
+          <div id="location-longitude" class="story-detail__location__longitude" data-value="${location.longitude}">Longitude:</div>
         </div>
-        <div id="author" class="story-detail__author" data-value="${reporterName}">Dilaporkan oleh:</div>
+        <div id="author" class="story-detail__author" data-value="${storyerName}">Dilaporkan oleh:</div>
       </div>
 
       <div id="damage-level" class="story-detail__damage-level">
@@ -276,7 +277,7 @@ export function generateUnsubscribeButtonTemplate() {
   `;
 }
 
-export function generateSaveReportButtonTemplate() {
+export function generateSavestoryButtonTemplate() {
   return `
     <button id="story-detail-save" class="btn btn-transparent">
       Simpan laporan <i class="far fa-bookmark"></i>
@@ -284,7 +285,7 @@ export function generateSaveReportButtonTemplate() {
   `;
 }
 
-export function generateRemoveReportButtonTemplate() {
+export function generateRemovestoryButtonTemplate() {
   return `
     <button id="story-detail-remove" class="btn btn-transparent">
       Buang laporan <i class="fas fa-bookmark"></i>

@@ -2,36 +2,38 @@ import {
   generateCommentsListEmptyTemplate,
   generateCommentsListErrorTemplate,
   generateLoaderAbsoluteTemplate,
-  generateRemoveReportButtonTemplate,
-  generateReportCommentItemTemplate,
-  generateReportDetailErrorTemplate,
-  generateReportDetailTemplate,
-  generateSaveReportButtonTemplate,
+  generateRemoveStoryButtonTemplate,
+  generateStoryCommentItemTemplate,
+  generateStoryDetailErrorTemplate,
+  generateStoryDetailTemplate,
+  generateSaveStoryButtonTemplate,
 } from '../../templates';
 import { createCarousel } from '../../utils';
 import StoryDetailPresenter from './story-detail-presenter';
 import { parseActivePathname } from '../../routes/url-parser';
+import Map from '../../utils/map';
 import * as CityCareAPI from '../../data/api';
 
-export default class ReportDetailPage {
+export default class StoryDetailPage {
   #presenter = null;
   #form = null;
+  #map = null;
 
   async render() {
     return `
       <section>
-        <div class="report-detail__container">
-          <div id="report-detail" class="report-detail"></div>
-          <div id="report-detail-loading-container"></div>
+        <div class="story-detail__container">
+          <div id="story-detail" class="story-detail"></div>
+          <div id="story-detail-loading-container"></div>
         </div>
       </section>
       
       <section class="container">
         <hr>
-        <div class="report-detail__comments__container">
-          <div class="report-detail__comments-form__container">
-            <h2 class="report-detail__comments-form__title">Beri Tanggapan</h2>
-            <form id="comments-list-form" class="report-detail__comments-form__form">
+        <div class="story-detail__comments__container">
+          <div class="story-detail__comments-form__container">
+            <h2 class="story-detail__comments-form__title">Beri Tanggapan</h2>
+            <form id="comments-list-form" class="story-detail__comments-form__form">
               <textarea name="body" placeholder="Beri tanggapan terkait laporan."></textarea>
               <div id="submit-button-container">
                 <button class="btn" type="submit">Tanggapi</button>
@@ -39,8 +41,8 @@ export default class ReportDetailPage {
             </form>
           </div>
           <hr>
-          <div class="report-detail__comments-list__container">
-            <div id="report-detail-comments-list"></div>
+          <div class="story-detail__comments-list__container">
+            <div id="story-detail-comments-list"></div>
             <div id="comments-list-loading-container"></div>
           </div>
         </div>
@@ -56,38 +58,46 @@ export default class ReportDetailPage {
 
     this.#setupForm();
 
-    this.#presenter.showReportDetail();
+    this.#presenter.showStoryDetail();
     this.#presenter.getCommentsList();
   }
 
-  async populateReportDetailAndInitialMap(message, report) {
-    document.getElementById('report-detail').innerHTML = generateReportDetailTemplate({
-      title: report.title,
-      description: report.description,
-      damageLevel: report.damageLevel,
-      evidenceImages: report.evidenceImages,
-      latitudeLocation: report.location.latitude,
-      longitudeLocation: report.location.longitude,
-      reporterName: report.reporter.name,
-      createdAt: report.createdAt,
+  async populateStoryDetailAndInitialMap(message, story) {
+    document.getElementById('story-detail').innerHTML = generateStoryDetailTemplate({
+      title: story.title,
+      description: story.description,
+      damageLevel: story.damageLevel,
+      evidenceImages: story.evidenceImages,
+      location: story.location,
+      latitudeLocation: story.location.latitude,
+      longitudeLocation: story.location.longitude,
+      storyerName: story.storyer.name,
+      createdAt: story.createdAt,
     });
 
     // Carousel images
     createCarousel(document.getElementById('images'));
 
     // Map
-    await this.#presenter.showReportDetailMap();
+    await this.#presenter.showStoryDetailMap();
+    if (this.#map) {
+      const storyCoordinate = [story.location.latitude, story.location.longitude];
+      const markerOptions = { alt: story.title };
+      const popupOptions = { content: story.title };
+      this.#map.changeCamera(storyCoordinate);
+      this.#map.addMarker(storyCoordinate, markerOptions, popupOptions);
+    }
 
     // Actions buttons
     this.#presenter.showSaveButton();
     this.addNotifyMeEventListener();
   }
 
-  populateReportDetailError(message) {
-    document.getElementById('report-detail').innerHTML = generateReportDetailErrorTemplate(message);
+  populateStoryDetailError(message) {
+    document.getElementById('story-detail').innerHTML = generateStoryDetailErrorTemplate(message);
   }
 
-  populateReportDetailComments(message, comments) {
+  populateStoryDetailComments(message, comments) {
     if (comments.length <= 0) {
       this.populateCommentsListEmpty();
       return;
@@ -96,7 +106,7 @@ export default class ReportDetailPage {
     const html = comments.reduce(
       (accumulator, comment) =>
         accumulator.concat(
-          generateReportCommentItemTemplate({
+          generateStoryCommentItemTemplate({
             photoUrlCommenter: comment.commenter.photoUrl,
             nameCommenter: comment.commenter.name,
             body: comment.body,
@@ -105,23 +115,25 @@ export default class ReportDetailPage {
       '',
     );
 
-    document.getElementById('report-detail-comments-list').innerHTML = `
-      <div class="report-detail__comments-list">${html}</div>
+    document.getElementById('story-detail-comments-list').innerHTML = `
+      <div class="story-detail__comments-list">${html}</div>
     `;
   }
 
   populateCommentsListEmpty() {
-    document.getElementById('report-detail-comments-list').innerHTML =
+    document.getElementById('story-detail-comments-list').innerHTML =
       generateCommentsListEmptyTemplate();
   }
 
   populateCommentsListError(message) {
-    document.getElementById('report-detail-comments-list').innerHTML =
+    document.getElementById('story-detail-comments-list').innerHTML =
       generateCommentsListErrorTemplate(message);
   }
 
   async initialMap() {
-    // TODO: map initialization
+    this.#map = await Map.build('#map', {
+      zoom: 15,
+    });
   }
 
   #setupForm() {
@@ -153,35 +165,35 @@ export default class ReportDetailPage {
 
   renderSaveButton() {
     document.getElementById('save-actions-container').innerHTML =
-      generateSaveReportButtonTemplate();
+      generateSaveStoryButtonTemplate();
 
-    document.getElementById('report-detail-save').addEventListener('click', async () => {
+    document.getElementById('story-detail-save').addEventListener('click', async () => {
       alert('Fitur simpan laporan akan segera hadir!');
     });
   }
 
   renderRemoveButton() {
     document.getElementById('save-actions-container').innerHTML =
-      generateRemoveReportButtonTemplate();
+      generateRemoveStoryButtonTemplate();
 
-    document.getElementById('report-detail-remove').addEventListener('click', async () => {
+    document.getElementById('story-detail-remove').addEventListener('click', async () => {
       alert('Fitur simpan laporan akan segera hadir!');
     });
   }
 
   addNotifyMeEventListener() {
-    document.getElementById('report-detail-notify-me').addEventListener('click', () => {
+    document.getElementById('story-detail-notify-me').addEventListener('click', () => {
       alert('Fitur notifikasi laporan akan segera hadir!');
     });
   }
 
-  showReportDetailLoading() {
-    document.getElementById('report-detail-loading-container').innerHTML =
+  showStoryDetailLoading() {
+    document.getElementById('story-detail-loading-container').innerHTML =
       generateLoaderAbsoluteTemplate();
   }
 
-  hideReportDetailLoading() {
-    document.getElementById('report-detail-loading-container').innerHTML = '';
+  hideStoryDetailLoading() {
+    document.getElementById('story-detail-loading-container').innerHTML = '';
   }
 
   showMapLoading() {

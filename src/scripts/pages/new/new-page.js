@@ -15,10 +15,10 @@ export default class NewPage {
   async render() {
     return `
       <section>
-        <div class="new-report__header">
+        <div class="new-story__header">
           <div class="container">
-            <h1 class="new-report__header__title">Buat Laporan Baru</h1>
-            <p class="new-report__header__description">
+            <h1 class="new-story__header__title">Buat Laporan Baru</h1>
+            <p class="new-story__header__description">
               Silakan lengkapi formulir di bawah untuk membuat laporan baru.<br>
               Pastikan laporan yang dibuat adalah valid.
             </p>
