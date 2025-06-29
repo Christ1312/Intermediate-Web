@@ -169,16 +169,20 @@ export default class NewPage {
   }
 
   #setupCamera() {
-    if (this.#camera) {
-      return;
-    }
+  if (!this.#camera) {
     this.#camera = new Camera({
       video: document.getElementById('camera-video'),
       cameraSelect: document.getElementById('camera-select'),
       canvas: document.getElementById('camera-canvas'),
-
     });
   }
+ 
+  this.#camera.addCheeseButtonListener('#camera-take-button', async () => {
+    const image = await this.#camera.takePicture();
+    await this.#addTakenPicture(image);
+    await this.#populateTakenPictures();
+  });
+}
 
   async #addTakenPicture(image) {
     let blob = image;

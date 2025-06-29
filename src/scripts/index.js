@@ -5,6 +5,7 @@ import 'tiny-slider/dist/tiny-slider.css';
 
 // Components
 import App from './pages/app';
+import Camera from './utils/camera';
 
 document.addEventListener('DOMContentLoaded', async () => {
   const app = new App({
@@ -14,6 +15,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     skipLinkButton: document.getElementById('skip-link'),
   });
   await app.renderPage();
+
+  // Stop all active media
+    Camera.stopAllStreams();
 
   window.addEventListener('hashchange', async () => {
     await app.renderPage();

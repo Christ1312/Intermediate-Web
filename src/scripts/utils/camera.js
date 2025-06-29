@@ -10,11 +10,36 @@ export default class Camera {
 
   #takePictureButton;
 
-  addCheeseButtonListener(selector, callback) {
-    this.#takePictureButton = document.querySelector(selector);
-    this.#takePictureButton.onclick = callback;
+  static addNewStream(stream) {
+    if (!Array.isArray(window.currentStreams)) {
+      window.currentStreams = [stream];
+      return;
+    }
+    window.currentStreams = [...window.currentStreams, stream];
   }
-}
+  static stopAllStreams() {
+    if (!Array.isArray(window.currentStreams)) {
+      window.currentStreams = [];
+      return;
+    }
+    window.currentStreams.forEach((stream) => {
+      if (stream.active) {
+        stream.getTracks().forEach((track) => track.stop());
+      }
+    });
+  }
+
+  async launch() {
+    this.#currentStream = await this.#getStream();
+ 
+    // Record all MediaStream in global context
+    Camera.addNewStream(this.#currentStream);
+ 
+    this.#videoElement.srcObject = this.#currentStream;
+    this.#videoElement.play();
+ 
+    this.#clearCanvas();
+  } 
  
   constructor({ video, cameraSelect, canvas, options = {} }) {
     this.#videoElement = video;
@@ -134,5 +159,10 @@ export default class Camera {
     return await new Promise((resolve) => {
       this.#canvasElement.toBlob((blob) => resolve(blob));
     });
+  }
+
+  addCheeseButtonListener(selector, callback) {
+    this.#takePictureButton = document.querySelector(selector);
+    this.#takePictureButton.onclick = callback;
   }
 }
