@@ -72,6 +72,10 @@ export default class NewPage {
  
                   <div class="new-form__camera__tools">
                     <select id="camera-select"></select>
+                      <button id="camera-take-button" class="btn" type="button">
+                        Ambil Gambar
+                      </button>
+                    </div>
                   </div>
                 </div>
                 <ul id="documentations-taken-list" class="new-form__documentations__outputs"></ul>
@@ -171,6 +175,8 @@ export default class NewPage {
     this.#camera = new Camera({
       video: document.getElementById('camera-video'),
       cameraSelect: document.getElementById('camera-select'),
+      canvas: document.getElementById('camera-canvas'),
+
     });
   }
 

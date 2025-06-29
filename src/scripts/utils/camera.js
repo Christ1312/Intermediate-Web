@@ -7,6 +7,14 @@ export default class Camera {
   #videoElement;
   #selectCameraElement;
   #canvasElement;
+
+  #takePictureButton;
+
+  addCheeseButtonListener(selector, callback) {
+    this.#takePictureButton = document.querySelector(selector);
+    this.#takePictureButton.onclick = callback;
+  }
+}
  
   constructor({ video, cameraSelect, canvas, options = {} }) {
     this.#videoElement = video;
@@ -113,5 +121,18 @@ export default class Camera {
     const context = this.#canvasElement.getContext('2d');
     context.fillStyle = '#AAAAAA';
     context.fillRect(0, 0, this.#canvasElement.width, this.#canvasElement.height);
+  }
+
+  async takePicture() {
+    if (!(this.#width && this.#height)) {
+      return null;
+    }
+    const context = this.#canvasElement.getContext('2d');
+    this.#canvasElement.width = this.#width;
+    this.#canvasElement.height = this.#height;
+    context.drawImage(this.#videoElement, 0, 0, this.#width, this.#height);
+    return await new Promise((resolve) => {
+      this.#canvasElement.toBlob((blob) => resolve(blob));
+    });
   }
 }
