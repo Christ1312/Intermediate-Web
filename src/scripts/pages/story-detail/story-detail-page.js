@@ -9,7 +9,7 @@ import {
   generateSaveStoryButtonTemplate,
 } from '../../templates';
 import { createCarousel } from '../../utils';
-import StoryDetailPresenter from './story-detail-presenter';
+import StoryDetailPresenter from './Story-detail-presenter';
 import { parseActivePathname } from '../../routes/url-parser';
 import Map from '../../utils/map';
 import * as CityCareAPI from '../../data/api';
@@ -22,18 +22,18 @@ export default class StoryDetailPage {
   async render() {
     return `
       <section>
-        <div class="story-detail__container">
-          <div id="story-detail" class="story-detail"></div>
-          <div id="story-detail-loading-container"></div>
+        <div class="Story-detail__container">
+          <div id="Story-detail" class="Story-detail"></div>
+          <div id="Story-detail-loading-container"></div>
         </div>
       </section>
       
       <section class="container">
         <hr>
-        <div class="story-detail__comments__container">
-          <div class="story-detail__comments-form__container">
-            <h2 class="story-detail__comments-form__title">Beri Tanggapan</h2>
-            <form id="comments-list-form" class="story-detail__comments-form__form">
+        <div class="Story-detail__comments__container">
+          <div class="Story-detail__comments-form__container">
+            <h2 class="Story-detail__comments-form__title">Beri Tanggapan</h2>
+            <form id="comments-list-form" class="Story-detail__comments-form__form">
               <textarea name="body" placeholder="Beri tanggapan terkait laporan."></textarea>
               <div id="submit-button-container">
                 <button class="btn" type="submit">Tanggapi</button>
@@ -41,8 +41,8 @@ export default class StoryDetailPage {
             </form>
           </div>
           <hr>
-          <div class="story-detail__comments-list__container">
-            <div id="story-detail-comments-list"></div>
+          <div class="Story-detail__comments-list__container">
+            <div id="Story-detail-comments-list"></div>
             <div id="comments-list-loading-container"></div>
           </div>
         </div>
@@ -63,7 +63,7 @@ export default class StoryDetailPage {
   }
 
   async populateStoryDetailAndInitialMap(message, story) {
-    document.getElementById('story-detail').innerHTML = generateStoryDetailTemplate({
+    document.getElementById('Story-detail').innerHTML = generateStoryDetailTemplate({
       title: story.title,
       description: story.description,
       damageLevel: story.damageLevel,
@@ -94,7 +94,7 @@ export default class StoryDetailPage {
   }
 
   populateStoryDetailError(message) {
-    document.getElementById('story-detail').innerHTML = generateStoryDetailErrorTemplate(message);
+    document.getElementById('Story-detail').innerHTML = generateStoryDetailErrorTemplate(message);
   }
 
   populateStoryDetailComments(message, comments) {
@@ -115,18 +115,18 @@ export default class StoryDetailPage {
       '',
     );
 
-    document.getElementById('story-detail-comments-list').innerHTML = `
-      <div class="story-detail__comments-list">${html}</div>
+    document.getElementById('Story-detail-comments-list').innerHTML = `
+      <div class="Story-detail__comments-list">${html}</div>
     `;
   }
 
   populateCommentsListEmpty() {
-    document.getElementById('story-detail-comments-list').innerHTML =
+    document.getElementById('Story-detail-comments-list').innerHTML =
       generateCommentsListEmptyTemplate();
   }
 
   populateCommentsListError(message) {
-    document.getElementById('story-detail-comments-list').innerHTML =
+    document.getElementById('Story-detail-comments-list').innerHTML =
       generateCommentsListErrorTemplate(message);
   }
 
@@ -167,7 +167,7 @@ export default class StoryDetailPage {
     document.getElementById('save-actions-container').innerHTML =
       generateSaveStoryButtonTemplate();
 
-    document.getElementById('story-detail-save').addEventListener('click', async () => {
+    document.getElementById('Story-detail-save').addEventListener('click', async () => {
       alert('Fitur simpan laporan akan segera hadir!');
     });
   }
@@ -176,24 +176,24 @@ export default class StoryDetailPage {
     document.getElementById('save-actions-container').innerHTML =
       generateRemoveStoryButtonTemplate();
 
-    document.getElementById('story-detail-remove').addEventListener('click', async () => {
+    document.getElementById('Story-detail-remove').addEventListener('click', async () => {
       alert('Fitur simpan laporan akan segera hadir!');
     });
   }
 
   addNotifyMeEventListener() {
-    document.getElementById('story-detail-notify-me').addEventListener('click', () => {
+    document.getElementById('Story-detail-notify-me').addEventListener('click', () => {
       alert('Fitur notifikasi laporan akan segera hadir!');
     });
   }
 
   showStoryDetailLoading() {
-    document.getElementById('story-detail-loading-container').innerHTML =
+    document.getElementById('Story-detail-loading-container').innerHTML =
       generateLoaderAbsoluteTemplate();
   }
 
   hideStoryDetailLoading() {
-    document.getElementById('story-detail-loading-container').innerHTML = '';
+    document.getElementById('Story-detail-loading-container').innerHTML = '';
   }
 
   showMapLoading() {
