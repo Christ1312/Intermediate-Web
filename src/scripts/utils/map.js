@@ -1,5 +1,4 @@
-import { map, tileLayer } from 'leaflet';
-import markerIcon from 'leaflet/dist/images/marker-icon.png';
+import { map, tileLayer, marker, icon, Icon, popup } from 'leaflet';
 import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png';
 import markerShadow from 'leaflet/dist/images/marker-shadow.png';
 import { MAP_SERVICE_API_KEY } from '../config';
@@ -100,6 +99,14 @@ export default class Map {
     this.#map.setView(latLng(coordinate), zoomLevel);
   }
 
+  getCenter() {
+    const { lat, lng } = this.#map.getCenter();
+    return {
+      latitude: lat,
+      longitude: lng,
+    };
+  }
+
   createIcon(options = {}) {
     return icon({
       ...Icon.Default.prototype.options,
@@ -129,5 +136,9 @@ export default class Map {
     }
     newMarker.addTo(this.#map);
     return newMarker;
+  }
+
+  addMapEventListener(eventName, callback) {
+    this.#map.addEventListener(eventName, callback);
   }
 }
