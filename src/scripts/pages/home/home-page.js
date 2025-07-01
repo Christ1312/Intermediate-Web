@@ -50,8 +50,8 @@ export default class HomePage {
 
       if (this.#map && story.lat!=null) {
         const coordinate = [story.lat, story.lon];
-        const markerOptions = { alt: story.title };
-        const popupOptions = { content: story.title };
+        const markerOptions = { alt: story.name };
+        const popupOptions = { content: story.name };
         this.#map.addMarker(coordinate, markerOptions, popupOptions);
       }
 

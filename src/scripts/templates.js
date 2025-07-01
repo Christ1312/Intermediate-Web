@@ -164,7 +164,7 @@ export function generateStoryDetailImageTemplate(imageUrl = null, alt = '') {
   `;
 }
 
-export function generatestoryCommentItemTemplate({ photoUrlCommenter, nameCommenter, body }) {
+export function generateStoryCommentItemTemplate({ photoUrlCommenter, nameCommenter, body }) {
   return `
     <article tabindex="0" class="Story-detail__comment-item">
       <img
@@ -277,7 +277,7 @@ export function generateUnsubscribeButtonTemplate() {
   `;
 }
 
-export function generateSavestoryButtonTemplate() {
+export function generateSaveStoryButtonTemplate() {
   return `
     <button id="Story-detail-save" class="btn btn-transparent">
       Simpan laporan <i class="far fa-bookmark"></i>
@@ -285,7 +285,7 @@ export function generateSavestoryButtonTemplate() {
   `;
 }
 
-export function generateRemovestoryButtonTemplate() {
+export function generateRemoveStoryButtonTemplate() {
   return `
     <button id="Story-detail-remove" class="btn btn-transparent">
       Buang laporan <i class="fas fa-bookmark"></i>
