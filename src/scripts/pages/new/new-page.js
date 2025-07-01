@@ -187,19 +187,20 @@ export default class NewPage {
       const coordinate = event.target.getLatLng();
       this.#updateLatLngInput(coordinate.lat, coordinate.lng);
     });
-  
+
+    this.#map.addMapEventListener('click', (event) => {
+      draggableMarker.setLatLng(event.latlng);
+      // Keep center with user view
+      event.sourceTarget.flyTo(event.latlng);
+    });
+
+  }
 
   #updateLatLngInput(latitude, longitude) {
     this.#form.elements.namedItem('latitude').value = latitude;
     this.#form.elements.namedItem('longitude').value = longitude;
   }
 
-    this.#map.addMapEventListener('click', (event) => {
-      draggableMarker.setLatLng(event.latlng);
-
-      // Keep center with user view
-      event.sourceTarget.flyTo(event.latlng);
-    });
   }
 
   #setupCamera() {
