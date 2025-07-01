@@ -421,32 +421,32 @@ header {
 /* END OF LOGIN, REGISTER PAGE */
 
 /* HOME PAGE */
-.storys-list__map__container,
-.storys-list__map {
+.Stories-list__map__container,
+.Stories-list__map {
   height: 400px;
 }
 
-.storys-list__container {
+.Stories-list__container {
   min-height: 400px;
 }
 
-.storys-list__map__container,
-.storys-list__container {
+.Stories-list__map__container,
+.Stories-list__container {
   position: relative;
 }
 
-.storys-list__map__container {
+.Stories-list__map__container {
   background-color: darkgray;
 }
 
-.storiess-list {
+.Stories-list {
   display: grid;
   grid-template-columns: repeat(1, minmax(300px, 1fr));
   gap: 20px 15px;
 }
 
-.storys-list__empty,
-.storys-list__error {
+.Stories-list__empty,
+.Stories-list__error {
   text-align: center;
 }
 
