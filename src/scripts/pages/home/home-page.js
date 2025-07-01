@@ -48,7 +48,7 @@ export default class HomePage {
     }
     const html = stories.reduce((accumulator, story) => {
 
-      if (this.#map) {
+      if (this.#map && story.lat!=null) {
         const coordinate = [story.lat, story.lon];
         const markerOptions = { alt: story.title };
         const popupOptions = { content: story.title };

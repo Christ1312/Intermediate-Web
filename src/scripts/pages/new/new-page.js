@@ -201,8 +201,6 @@ export default class NewPage {
     this.#form.elements.namedItem('longitude').value = longitude;
   }
 
-  }
-
   #setupCamera() {
   if (!this.#camera) {
     this.#camera = new Camera({

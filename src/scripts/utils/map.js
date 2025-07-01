@@ -1,4 +1,5 @@
 import { map, tileLayer, marker, icon, Icon, popup } from 'leaflet';
+import markerIcon from 'leaflet/dist/images/marker-icon.png';
 import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png';
 import markerShadow from 'leaflet/dist/images/marker-shadow.png';
 import { MAP_SERVICE_API_KEY } from '../config';
