@@ -27,7 +27,7 @@ export default class NewPresenter {
         latitude: latitude,
         longitude: longitude,
       };
-      const response = await this.#model.storeNewStory(data);
+      const response = await this.#model.insertStory(data);
 
       if (!response.ok) {
         console.error('postNewStory: response:', response);

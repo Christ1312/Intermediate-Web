@@ -92,7 +92,7 @@ const ENDPOINTS = {
   // Auth
   REGISTER: `${BASE_URL}/register`,
   LOGIN: `${BASE_URL}/login`,
-  ADD_STORIES: `{BASE_URL}/stories`,
+  ADD_STORIES: `${BASE_URL}/stories`,
 
   // Push notifications (web push) (Story notif, Subscribe, Unsubscribe)
   SUBSCRIBE: `${BASE_URL}/notifications/subscribe`,

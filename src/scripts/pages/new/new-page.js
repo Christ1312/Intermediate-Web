@@ -125,11 +125,11 @@ export default class NewPage {
 
       const data = {
         description: this.#form.elements.namedItem('description').value,
-        photo: this.#takenDocumentations.map((picture) => picture.blob),
+        photo: this.#takenDocumentations.blob,
         latitude: this.#form.elements.namedItem('latitude').value,
         longitude: this.#form.elements.namedItem('longitude').value,
       };
-      await this.#presenter.insertStory(data);
+      await this.#presenter.postNewStory(data);
     });
 
     document.getElementById('documentations-input').addEventListener('change', async (event) => {
