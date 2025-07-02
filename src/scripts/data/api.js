@@ -17,13 +17,13 @@ export async function getStory() {
 }
 
 // Add new stories 
-export async function insertStory({ description, photo, lat, lon }) {
+export async function insertStory({ description, photo, latitude, longitude }) {
   const accessToken = getAccessToken();
   const formData = new FormData();
   formData.set('description', description);
   formData.append('photo', photo);
-  formData.set('lat', lat);
-  formData.set('lon', lon);
+  formData.set('lat', latitude);
+  formData.set('lon', longitude);
   const fetchResponse = await fetch(ENDPOINTS.ADD_STORIES, {
     method: 'POST',
     headers: { Authorization: `Bearer ${accessToken}` },
@@ -37,20 +37,13 @@ export async function insertStory({ description, photo, lat, lon }) {
 }
 
 // Store new stories
-export async function storeStory() {
-  const response = await fetch(`${BASE_URL}/stories`, {
-  });
-  const responseJSON = await response.json();
+export async function getStoryById() {
   
-  return {
-    ...responseJSON,
-    ok: response.ok,
-  };
 }
 
 
 // Add new stories (guest)
-export async function insertStory({ description, photo, lat, lon }) {
+export async function insertStoryGuest({ description, photo, lat, lon }) {
   const accessToken = getAccessToken();
   const formData = new FormData();
   formData.set('description', description);

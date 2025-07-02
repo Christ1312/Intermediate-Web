@@ -129,7 +129,7 @@ export default class NewPage {
         latitude: this.#form.elements.namedItem('latitude').value,
         longitude: this.#form.elements.namedItem('longitude').value,
       };
-      await this.#presenter.postNewStory(data);
+      await this.#presenter.insertStory(data);
     });
 
     document.getElementById('documentations-input').addEventListener('change', async (event) => {
@@ -216,45 +216,25 @@ export default class NewPage {
 
   async #addTakenPicture(image) {
     let blob = image;
-
     if (image instanceof String) {
       blob = await convertBase64ToBlob(image, 'image/png');
     }
-
-    const newDocumentation = {
+    this.#takenDocumentations = {
       id: `${Date.now()}-${Math.random().toString(36).substring(2, 9)}`,
       blob: blob,
     };
-    this.#takenDocumentations = [...this.#takenDocumentations, newDocumentation];
   }
 
   async #populateTakenPictures() {
-    const html = this.#takenDocumentations.reduce((accumulator, picture, currentIndex) => {
-      const imageUrl = URL.createObjectURL(picture.blob);
-      return accumulator.concat(`
+    const imageUrl = URL.createObjectURL(this.#takenDocumentations.blob);
+    const html = `
         <li class="new-form__documentations__outputs-item">
-          <button type="button" data-deletepictureid="${picture.id}" class="new-form__documentations__outputs-item__delete-btn">
-            <img src="${imageUrl}" alt="Dokumentasi ke-${currentIndex + 1}">
+          <button type="button" data-deletepictureid="${this.#takenDocumentations.id}" class="new-form__documentations__outputs-item__delete-btn">
+            <img src="${imageUrl}">
           </button>
         </li>
-      `);
-    }, '');
-
+      `;
     document.getElementById('documentations-taken-list').innerHTML = html;
-
-    document.querySelectorAll('button[data-deletepictureid]').forEach((button) =>
-      button.addEventListener('click', (event) => {
-        const pictureId = event.currentTarget.dataset.deletepictureid;
-
-        const deleted = this.#removePicture(pictureId);
-        if (!deleted) {
-          console.log(`Picture with id ${pictureId} was not found`);
-        }
-
-        // Updating taken pictures
-        this.#populateTakenPictures();
-      }),
-    );
   }
 
   #removePicture(id) {
