@@ -64,23 +64,20 @@ export default class NewPage {
                     Buka Kamera
                   </button>
                 </div>
-                <div id="camera-container" class="new-form__camera__container">
-                  <video id="camera-video" class="new-form__camera__video">
+                  <div id="camera-container" class="new-form__camera__container">
+                    <video id="camera-video" class="new-form__camera__video">
                       Video stream not available.
-                  </video>
-                  <div class="new-form__camera__tools">
-                    <select id="camera-select"></select>
-                  </div>
-                  <canvas id="camera-canvas" class="new-form__camera__canvas"></canvas>
- 
-                  <div class="new-form__camera__tools">
-                    <select id="camera-select"></select>
-                      <button id="camera-take-button" class="btn" type="button">
-                        Ambil Gambar
-                      </button>
+                    </video>
+                    <canvas id="camera-canvas" class="new-form__camera__canvas"></canvas>
+                    <div class="new-form__camera__tools">
+                      <select id="camera-select"></select>
+                    <div class="new-form__camera__tools_buttons">
+                        <button id="camera-take-button" class="btn" type="button">
+                          Ambil Gambar
+                        </button>
+                      </div>
                     </div>
                   </div>
-                </div>
                 <ul id="documentations-taken-list" class="new-form__documentations__outputs"></ul>
               </div>
             </div>
@@ -132,7 +129,7 @@ export default class NewPage {
         latitude: this.#form.elements.namedItem('latitude').value,
         longitude: this.#form.elements.namedItem('longitude').value,
       };
-      await this.#presenter.postNewReport(data);
+      await this.#presenter.postNewStory(data);
     });
 
     document.getElementById('documentations-input').addEventListener('change', async (event) => {

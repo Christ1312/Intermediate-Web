@@ -86,7 +86,6 @@ export function generateStoryItemTemplate({
   description,
   photoUrl,
   createdAt,
-  placeName,
 }) {
   return `
     <div tabindex="0" class="story-item" data-storyid="${id}">
@@ -99,7 +98,6 @@ export function generateStoryItemTemplate({
           </div>
           <div class="story-item__location">
             <i data-feather="map-pin"></i> 
-            <p>${placeName}</p>
           </div>
         </div>
         <div id="story-description" class="story-item__description">
@@ -207,7 +205,6 @@ export function generateStoryDetailTemplate({
       <div class="Story-detail__more-info">
         <div class="Story-detail__more-info__inline">
           <div id="createdat" class="Story-detail__createdat" data-value="${createdAtFormatted}"><i class="fas fa-calendar-alt"></i></div>
-          <div id="location-place-name" class="Story-detail__location__place-name" data-value="${location.placeName}"><i class="fas fa-map"></i></div>
         </div>
         <div class="Story-detail__more-info__inline">
           <div id="location-latitude" class="Story-detail__location__latitude" data-value="${location.latitude}">Latitude:</div>

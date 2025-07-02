@@ -36,9 +36,64 @@ export async function insertStory({ description, photo, lat, lon }) {
   };
 }
 
-  // Add new stories (guest)
+// Store new stories
+export async function storeStory() {
+  const response = await fetch(`${BASE_URL}/stories`, {
+  });
+  const responseJSON = await response.json();
+  
+  return {
+    ...responseJSON,
+    ok: response.ok,
+  };
+}
 
-  // Detail story
+
+// Add new stories (guest)
+export async function insertStory({ description, photo, lat, lon }) {
+  const accessToken = getAccessToken();
+  const formData = new FormData();
+  formData.set('description', description);
+  formData.append('photo', photo);
+  formData.set('lat', lat);
+  formData.set('lon', lon);
+  const fetchResponse = await fetch(ENDPOINTS.ADD_STORIES, {
+    method: 'POST',
+    headers: { Authorization: `Bearer ${accessToken}` },
+    body: formData,
+  });
+  const json = await fetchResponse.json();
+  return {
+    ...json,
+    ok: fetchResponse.ok,
+  };
+}
+
+// Detail story
+export async function storeStory() {
+  const response = await fetch(`${BASE_URL}/stories/:id`, {
+    headers: {
+      Authorization: 'Bearer ' + getAccessToken()
+    }
+  });
+  const responseJSON = await response.json();
+  
+  return {
+    ...responseJSON,
+    ok: response.ok,
+    "error": false,
+    "message": "Story fetched successfully",
+    "story": {
+        "id": "story-FvU4u0Vp2S3PMsFg",
+        "name": "Dimas",
+        "description": "Lorem Ipsum",
+        "photoUrl": "https://story-api.dicoding.dev/images/stories/photos-1641623658595_dummy-pic.png",
+        "createdAt": "2022-01-08T06:34:18.598Z",
+        "lat": -10.212,
+        "lon": -16.002
+    }
+  };
+}
 
 const ENDPOINTS = {
   // Auth
