@@ -118,15 +118,6 @@ export default class Camera {
     }
   }
  
-  async launch() {
-    this.#currentStream = await this.#getStream();
- 
-    this.#videoElement.srcObject = this.#currentStream;
-    this.#videoElement.play();
- 
-    this.#clearCanvas();
-  }
- 
   stop() {
     if (this.#videoElement) {
       this.#videoElement.srcObject = null;
