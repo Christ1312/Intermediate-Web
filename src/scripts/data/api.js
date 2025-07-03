@@ -36,12 +36,6 @@ export async function insertStory({ description, photo, latitude, longitude }) {
   };
 }
 
-// Store new stories
-export async function getStoryById() {
-  
-}
-
-
 // Add new stories (guest)
 export async function insertStoryGuest({ description, photo, lat, lon }) {
   const accessToken = getAccessToken();

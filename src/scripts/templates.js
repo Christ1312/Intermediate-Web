@@ -108,9 +108,6 @@ export function generateStoryItemTemplate({
           <i data-feather="edit"></i>
           <p>${name}</p>
         </div>
-        <a class="btn story-item__read-more" href="#/stories/${id}">
-          Selengkapnya <i data-feather="arrow-right"></i>
-        </a>
       </div>
     </div>
   `;
