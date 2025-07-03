@@ -14,8 +14,8 @@ export function generateLoaderAbsoluteTemplate() {
 
 export function generateMainNavigationListTemplate() {
   return `
-    <li><a id="story-list-button" class="story-list-button" href="#/">Daftar Laporan</a></li>
-    <li><a id="bookmark-button" class="bookmark-button" href="#/bookmark">Laporan Tersimpan</a></li>
+    <li><a id="story-list-button" class="story-list-button" href="#/">Daftar Story</a></li>
+    <li><a id="bookmark-button" class="bookmark-button" href="#/bookmark">Story Tersimpan</a></li>
   `;
 }
 
@@ -30,7 +30,7 @@ export function generateUnauthenticatedNavigationListTemplate() {
 export function generateAuthenticatedNavigationListTemplate() {
   return `
     <li id="push-notification-tools" class="push-notification-tools"></li>
-    <li><a id="new-story-button" class="btn new-story-button" href="#/new">Buat Laporan <i class="fas fa-plus"></i></a></li>
+    <li><a id="new-story-button" class="btn new-story-button" href="#/new">Buat Story <i class="fas fa-plus"></i></a></li>
     <li><a id="logout-button" class="logout-button" href="#/logout"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
   `;
 }
