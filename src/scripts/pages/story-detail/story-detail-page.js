@@ -9,7 +9,7 @@ import {
   generateSaveStoryButtonTemplate,
 } from '../../templates';
 import { createCarousel } from '../../utils';
-import StoryDetailPresenter from './Story-detail-presenter';
+import StoryDetailPresenter from './story-detail-presenter';
 import { parseActivePathname } from '../../routes/url-parser';
 import Map from '../../utils/map';
 import * as CityCareAPI from '../../data/api';
