@@ -183,7 +183,7 @@ export default class StoryDetailPage {
 
   addNotifyMeEventListener() {
     document.getElementById('Story-detail-notify-me').addEventListener('click', () => {
-      alert('Fitur notifikasi laporan akan segera hadir!');
+      this.#presenter.notifyMe();
     });
   }
 
