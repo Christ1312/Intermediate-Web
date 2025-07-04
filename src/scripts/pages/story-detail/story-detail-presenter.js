@@ -4,11 +4,13 @@ export default class StoryDetailPresenter {
   #storyId;
   #view;
   #apiModel;
+  #dbModel;
 
-  constructor(storyId, { view, apiModel }) {
+  constructor(storyId, { view, apiModel, dbModel }) {
     this.#storyId = storyId;
     this.#view = view;
     this.#apiModel = apiModel;
+    this.#dbModel = dbModel;
   }
 
   async showStoryDetailMap() {
@@ -70,7 +72,7 @@ export default class StoryDetailPresenter {
       }
 
       // No need to wait response
-      this.notifyReportOwner(response.data.id);
+      this.notifyStoryOwner(response.data.id);
 
       this.#view.postNewCommentSuccessfully(response.message, response.data);
     } catch (error) {
@@ -81,27 +83,27 @@ export default class StoryDetailPresenter {
     }
   }
 
-  async notifyReportOwner(commentId) {
+  async notifyStoryOwner(commentId) {
     try {
-      const response = await this.#apiModel.sendCommentToReportOwnerViaNotification(
+      const response = await this.#apiModel.sendCommentToStoryOwnerViaNotification(
         this.#storyId,
         commentId,
       );
 
       if (!response.ok) {
-        console.error('notifyReportOwner: response:', response);
+        console.error('notifyStoryOwner: response:', response);
         return;
       }
       
-      console.log('notifyReportOwner:', response.message);
+      console.log('notifyStoryOwner:', response.message);
     } catch (error) {
-      console.error('notifyReportOwner: error:', error);
+      console.error('notifyStoryOwner: error:', error);
     }
   }
 
   async notifyMe() {
     try {
-      const response = await this.#apiModel.sendReportToMeViaNotification(this.#storyId);
+      const response = await this.#apiModel.sendStoryToMeViaNotification(this.#storyId);
       if (!response.ok) {
         console.error('notifyMe: response:', response);
         return;
@@ -109,6 +111,28 @@ export default class StoryDetailPresenter {
       console.log('notifyMe:', response.message);
     } catch (error) {
       console.error('notifyMe: error:', error);
+    }
+  }
+
+  async saveStory() {
+    try {
+      const report = await this.#apiModel.getStoryById(this.#storyId);
+      await this.#dbModel.putStory(report.data);
+      this.#view.saveToBookmarkSuccessfully('Success to save to bookmark');
+    } catch (error) {
+      console.error('saveStory: error:', error);
+      this.#view.saveToBookmarkFailed(error.message);
+    }
+  }
+
+  async removeStory() {
+    try {
+      await this.#dbModel.removeStory(this.#storyId);
+      
+      this.#view.removeFromBookmarkSuccessfully('Success to remove from bookmark');
+    } catch (error) {
+      console.error('removeStory: error:', error);
+      this.#view.removeFromBookmarkFailed(error.message);
     }
   }
 
@@ -123,5 +147,16 @@ export default class StoryDetailPresenter {
 
   #isStorySaved() {
     return false;
+  }
+
+  async showSaveButton() {
+    if (await this.#isStorySaved()) {
+      this.#view.renderRemoveButton();
+      return;
+    }
+    this.#view.renderSaveButton();
+  }
+  async #isStorySaved() {
+    return !!(await this.#dbModel.getStoryById(this.#storyId));
   }
 }

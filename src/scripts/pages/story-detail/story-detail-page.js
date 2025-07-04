@@ -13,6 +13,8 @@ import StoryDetailPresenter from './story-detail-presenter';
 import { parseActivePathname } from '../../routes/url-parser';
 import Map from '../../utils/map';
 import * as CityCareAPI from '../../data/api';
+import Database from '../../data/database';
+
 
 export default class StoryDetailPage {
   #presenter = null;
@@ -54,6 +56,7 @@ export default class StoryDetailPage {
     this.#presenter = new StoryDetailPresenter(parseActivePathname().id, {
       view: this,
       apiModel: CityCareAPI,
+      dbModel: Database,
     });
 
     this.#setupForm();
@@ -168,8 +171,16 @@ export default class StoryDetailPage {
       generateSaveStoryButtonTemplate();
 
     document.getElementById('Story-detail-save').addEventListener('click', async () => {
-      alert('Fitur simpan laporan akan segera hadir!');
+      await this.#presenter.saveReport();
+      await this.#presenter.showSaveButton();
     });
+  }
+
+  saveToBookmarkSuccessfully(message) {
+    console.log(message);
+  }
+  saveToBookmarkFailed(message) {
+    alert(message);
   }
 
   renderRemoveButton() {
@@ -177,9 +188,18 @@ export default class StoryDetailPage {
       generateRemoveStoryButtonTemplate();
 
     document.getElementById('Story-detail-remove').addEventListener('click', async () => {
-      alert('Fitur simpan laporan akan segera hadir!');
+      await this.#presenter.removeReport();
+      await this.#presenter.showSaveButton();
     });
   }
+
+  removeFromBookmarkSuccessfully(message) {
+    console.log(message);
+  }
+
+  removeFromBookmarkFailed(message) {
+    alert(message);
+  }  
 
   addNotifyMeEventListener() {
     document.getElementById('Story-detail-notify-me').addEventListener('click', () => {
