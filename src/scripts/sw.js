@@ -11,7 +11,7 @@ precacheAndRoute(manifest);
 // Runtime caching
 registerRoute(
   ({ url }) => {
-    return url.origin === 'https://fonts.googleapis.com' || url.origin === 'https://fonts.gstatic.com');
+    return url.origin === 'https://fonts.googleapis.com' || url.origin === 'https://fonts.gstatic.com';
   },
   new CacheFirst({
     cacheName: 'google-fonts',
